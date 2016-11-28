@@ -227,6 +227,122 @@ describe('features/modeling - update properties', function() {
       expect(flowConnection.businessObject.get('foo:customAttr')).to.equal('FOO');
     }));
 
+
+    it('setting fill color', inject(function(elementRegistry, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+
+      // when
+      modeling.setFillColor(taskShape, '#ff0000');
+
+      // then
+      expect(taskShape.businessObject.di.fill).to.equal('#ff0000');
+    }));
+
+
+    it('unsetting fill color', inject(function(elementRegistry, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+      modeling.setFillColor(taskShape, '#ff0000');
+
+      // when
+      modeling.setFillColor(taskShape);
+
+      // then
+      expect(taskShape.businessObject.di.fill).not.to.exist;
+    }));
+
+
+    it('setting stroke color', inject(function(elementRegistry, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+
+      // when
+      modeling.setStrokeColor(taskShape, '#ff0000');
+
+      // then
+      expect(taskShape.businessObject.di.stroke).to.equal('#ff0000');
+    }));
+
+
+    it('unsetting stroke color', inject(function(elementRegistry, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+      modeling.setStrokeColor(taskShape, '#ff0000');
+
+      // when
+      modeling.setStrokeColor(taskShape);
+
+      // then
+      expect(taskShape.businessObject.di.stroke).not.to.exist;
+    }));
+
+
+    it('setting fill color (multiple elements)', inject(function(elementRegistry, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+
+      // when
+      modeling.setFillColor([ taskShape1, taskShape2 ], '#ff0000');
+
+      // then
+      expect(taskShape1.businessObject.di.fill).to.equal('#ff0000');
+      expect(taskShape2.businessObject.di.fill).to.equal('#ff0000');
+    }));
+
+
+    it('unsetting fill color (multiple elements)', inject(function(elementRegistry, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+      modeling.setFillColor([ taskShape1, taskShape2 ], '#ff0000');
+
+      // when
+      modeling.setFillColor([ taskShape1, taskShape2 ]);
+
+      // then
+      expect(taskShape1.businessObject.di.fill).not.to.exist;
+      expect(taskShape2.businessObject.di.fill).not.to.exist;
+    }));
+
+
+    it('setting stroke color (multiple elements)', inject(function(elementRegistry, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+
+      // when
+      modeling.setStrokeColor([ taskShape1, taskShape2 ], '#ff0000');
+
+      // then
+      expect(taskShape1.businessObject.di.stroke).to.equal('#ff0000');
+      expect(taskShape2.businessObject.di.stroke).to.equal('#ff0000');
+    }));
+
+
+    it('unsetting stroke color (multiple elements)', inject(function(elementRegistry, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+      modeling.setStrokeColor([ taskShape1, taskShape2 ], '#ff0000');
+
+      // when
+      modeling.setStrokeColor([ taskShape1, taskShape2 ]);
+
+      // then
+      expect(taskShape1.businessObject.di.stroke).not.to.exist;
+      expect(taskShape2.businessObject.di.stroke).not.to.exist;
+    }));
+
   });
 
 
@@ -357,6 +473,129 @@ describe('features/modeling - update properties', function() {
       expect(flowConnection.businessObject.get('foo:customAttr')).not.to.exist;
     }));
 
+
+    it('setting fill color', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+
+      // when
+      modeling.setFillColor(taskShape, '#ff0000');
+      commandStack.undo();
+
+      // then
+      expect(taskShape.businessObject.di.fill).not.to.exist;
+    }));
+
+
+    it('unsetting fill color', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+      modeling.setFillColor(taskShape, '#ff0000');
+
+      // when
+      modeling.setFillColor(taskShape);
+      commandStack.undo();
+
+      // then
+      expect(taskShape.businessObject.di.fill).to.equal('#ff0000');
+    }));
+
+
+    it('setting stroke color', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+
+      // when
+      modeling.setStrokeColor(taskShape, '#ff0000');
+      commandStack.undo();
+
+      // then
+      expect(taskShape.businessObject.di.stroke).not.to.exist;
+    }));
+
+
+    it('unsetting stroke color', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+      modeling.setStrokeColor(taskShape, '#ff0000');
+
+      // when
+      modeling.setStrokeColor(taskShape);
+      commandStack.undo();
+
+      // then
+      expect(taskShape.businessObject.di.stroke).to.equal('#ff0000');
+    }));
+
+
+    it('setting fill color (multiple elements)', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+
+      // when
+      modeling.setFillColor([ taskShape1, taskShape2 ], '#ff0000');
+      commandStack.undo();
+
+      // then
+      expect(taskShape1.businessObject.di.fill).not.to.exist;
+      expect(taskShape2.businessObject.di.fill).not.to.exist;
+    }));
+
+
+    it('unsetting fill color (multiple elements)', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+      modeling.setFillColor([ taskShape1, taskShape2 ], '#ff0000');
+
+      // when
+      modeling.setFillColor([ taskShape1, taskShape2 ]);
+      commandStack.undo();
+
+      // then
+      expect(taskShape1.businessObject.di.fill).to.equal('#ff0000');
+      expect(taskShape2.businessObject.di.fill).to.equal('#ff0000');
+    }));
+
+
+    it('setting stroke color (multiple elements)', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+
+      // when
+      modeling.setStrokeColor([ taskShape1, taskShape2 ], '#ff0000');
+      commandStack.undo();
+
+      // then
+      expect(taskShape1.businessObject.di.stroke).not.to.exist;
+      expect(taskShape2.businessObject.di.stroke).not.to.exist;
+    }));
+
+
+    it('unsetting stroke color (multiple elements)', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+      modeling.setStrokeColor([ taskShape1, taskShape2 ], '#ff0000');
+
+      // when
+      modeling.setStrokeColor([ taskShape1, taskShape2 ]);
+      commandStack.undo();
+
+      // then
+      expect(taskShape1.businessObject.di.stroke).to.equal('#ff0000');
+      expect(taskShape2.businessObject.di.stroke).to.equal('#ff0000');
+    }));
   });
 
 
@@ -430,6 +669,137 @@ describe('features/modeling - update properties', function() {
       expect(flowConnection.businessObject.name).not.to.exist;
     }));
 
+
+    it('setting fill color', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+
+      // when
+      modeling.setFillColor(taskShape, '#ff0000');
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(taskShape.businessObject.di.fill).to.equal('#ff0000');
+    }));
+
+
+    it('unsetting fill color', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+      modeling.setFillColor(taskShape, '#ff0000');
+
+      // when
+      modeling.setFillColor(taskShape);
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(taskShape.businessObject.di.fill).not.to.exist;
+    }));
+
+
+    it('setting stroke color', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+
+      // when
+      modeling.setStrokeColor(taskShape, '#ff0000');
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(taskShape.businessObject.di.stroke).to.equal('#ff0000');
+    }));
+
+
+    it('unsetting stroke color', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape = elementRegistry.get('Task_1');
+      modeling.setStrokeColor(taskShape, '#ff0000');
+
+      // when
+      modeling.setStrokeColor(taskShape);
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(taskShape.businessObject.di.stroke).not.to.exist;
+    }));
+
+
+    it('setting fill color (multiple elements)', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+
+      // when
+      modeling.setFillColor([ taskShape1, taskShape2 ], '#ff0000');
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(taskShape1.businessObject.di.fill).to.equal('#ff0000');
+      expect(taskShape2.businessObject.di.fill).to.equal('#ff0000');
+    }));
+
+
+    it('unsetting fill color (multiple elements)', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+      modeling.setFillColor([ taskShape1, taskShape2 ], '#ff0000');
+
+      // when
+      modeling.setFillColor([ taskShape1, taskShape2 ]);
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(taskShape1.businessObject.di.fill).not.to.exist;
+      expect(taskShape2.businessObject.di.fill).not.to.exist;
+    }));
+
+
+    it('setting stroke color (multiple elements)', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+
+      // when
+      modeling.setStrokeColor([ taskShape1, taskShape2 ], '#ff0000');
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(taskShape1.businessObject.di.stroke).to.equal('#ff0000');
+      expect(taskShape2.businessObject.di.stroke).to.equal('#ff0000');
+    }));
+
+
+    it('unsetting stroke color (multiple elements)', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var taskShape1 = elementRegistry.get('Task_1');
+      var taskShape2 = elementRegistry.get('Task_2');
+      modeling.setStrokeColor([ taskShape1, taskShape2 ], '#ff0000');
+
+      // when
+      modeling.setStrokeColor([ taskShape1, taskShape2 ]);
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(taskShape1.businessObject.di.stroke).not.to.exist;
+      expect(taskShape2.businessObject.di.stroke).not.to.exist;
+    }));
   });
 
 
